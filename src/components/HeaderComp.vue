@@ -1,7 +1,7 @@
 <script setup>
-import ButtonComp from "./ButtonComp.vue";
-import InputSearchComp from "./InputSearchComp.vue";
 import {ref} from "vue";
+import ButtonComp from "./buttons/ButtonComp.vue";
+import InputSearchComp from './inputs/InputSearchComp.vue'
 
 const searchText = ref(null);
 
@@ -55,8 +55,8 @@ const searchIcon = '/icons/search-icon.svg';
   display: flex;
   justify-content: space-between;
   padding: 15px 100px;
-  border-bottom: 2px solid var(--brand-white-F5F3F0-color);
-  background-color: var(--brand-white-FFFFFF-color);
+  border-bottom: 2px solid var(--brand-gray-color);
+  background-color: var(--brand-white-color);
 }
 
 .header-left-container {
