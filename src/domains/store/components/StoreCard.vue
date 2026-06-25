@@ -21,7 +21,7 @@ defineEmits(['select']);
     <!-- 카드 본문 -->
     <div class="store-card-text">
     
-      <!-- 업체면, 예약 가능 여부 -->
+      <!-- 업체명, 예약 가능 여부 -->
       <div class="store-card-title">
         <span class="store-card-name">{{ name }}</span>
         <span>

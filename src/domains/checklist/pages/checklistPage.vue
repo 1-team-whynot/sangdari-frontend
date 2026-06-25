@@ -39,15 +39,6 @@ const isDateTooSoon = computed(() => {
   return new Date(checklistStore.date) < new Date(minDate)
 });
 
-// 3. 예상 인원
-const HEADCOUNT = ref([
-  { label: '30명 이하', value: '30명 이하', min: 0, max: 30 },
-  { label: '31~100명', value: '31~100명', min: 31, max: 100 },
-  { label: '101~200명', value: '101~200명', min: 101, max: 200 },
-  { label: '201~300명', value: '201~300명', min: 201, max: 300 },
-  { label: '300명 초과', value: '300명 초과', min: 301, max: 9999 },
-]);
-
 // 4. 음식 종류
 const MENUCATEGORIES = ['한식', '분식', '양식', '중식', '일식', '카페·디저트', '기타'];
 
@@ -142,7 +133,7 @@ const submitChecklist = () => {
       <p class="checklist-title">예상 인원</p>
       <div class="checklist-btn-option">
         <button
-          v-for="option in HEADCOUNT"
+          v-for="option in checklistStore.HEADCOUNT"
           :key="option.value"
           :class="['checklist-btn', {'checklist-btn-active': checklistStore.headcount === option.value}]"
           @click="checklistStore.headcount = option.value"
