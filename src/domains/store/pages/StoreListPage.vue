@@ -8,20 +8,9 @@ import { useChecklistStore } from '../../checklist/stores/useChecklistStore.js';
 const checklistStore = useChecklistStore();
 const router = useRouter();
 
-// 화면 로드 시, 필터링된 업체 목록 받아오기
-onMounted(async() => {
-  try {
-    const url = '/api/stores';
-    const params = checklistStore.filterParams;
-
-    const res = await axios.get(url, {params});
-    const data = res.data;
-  
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-})
+// 화면 로드 시, 필터링된 업체 목록 받아오기 
+// TODO: 스토어 리스트 스토어 완성되면 불러오기
+onMounted(srotelist)
 
 // -----------------------------------------------------------------------------
 // 업체 더미 데이터 TODO: 백 구현 후 삭제

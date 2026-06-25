@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 
-export const useChecklistStore = defineStore('checklist', () => {
+const useChecklistStore = defineStore('checklist', () => {
 
   // 체크리스트 "3. 예상 인원"의 인원수 옵션
   const HEADCOUNT = ref([
@@ -62,3 +62,4 @@ export const useChecklistStore = defineStore('checklist', () => {
   }
 });
 
+export default useChecklistStore;
