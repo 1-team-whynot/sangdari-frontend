@@ -14,6 +14,17 @@ const errorStore = useErrorStore()
 // 현재 화면 ('user' | 'owner')
 const screen = ref('user')
 
+// 탭 전환 핸들러 추가
+const handleTabChange = (type) => {
+  screen.value = type;
+  
+  // 입력 폼 및 에러 상태 클리어
+  userLogin.email = '';
+  userLogin.password = '';
+  userLogin.error = '';
+};
+
+
 // ── 상태 관리 ───────────────
 const isLoading = ref(false);
 const userLogin = reactive({
@@ -51,10 +62,13 @@ const handleSubmit = async () => {
     if(error.response) {
       if(error.response?.data?.code === 'E21') {
         userLogin.error = error.response.data.data;
+      } else {
+        userLogin.error = error.response.data.message || '로그인 정보가 올바르지 않습니다.';
       }
+    } else {
+      userLogin.error = '서버와 연결할 수 없습니다. 네트워크를 확인해 주세요.';
     }
     errorStore.setErrorInfo(error);
-    router.replace('/error');
   } finally {
     isLoading.value = false;
   }
@@ -68,13 +82,13 @@ const handleSubmit = async () => {
       <div class="tabs">
         <button
           :class="['tab-btn', { 'tab-btn-active': screen === 'user' }]"
-          @click="screen = 'user'"
+          @click="handleTabChange('user')"
         >
           고객
         </button>
         <button
           :class="['tab-btn', { 'tab-btn-active': screen === 'owner' }]"
-          @click="screen = 'owner'"
+          @click="handleTabChange('owner')"
         >
           업체
         </button>

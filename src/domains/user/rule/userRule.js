@@ -6,21 +6,21 @@ export const email = (val) => {
   }
 
   if(!regex.test(val)) {
-    return '올바른 이메일 형식으로 입력해주세요.';
+    return '올바른 이메일 형식이 아닙니다.';
   }
 
   return '';
 }
 
 export const password = (val) => {
-  const regex = /^[0-9a-zA-Z!@#$%^&*()]{8,20}$/;
+  const regex = /^[0-9a-zA-Z!@#$%^&*]{6,20}$/;
 
   if(!val) {
     return '이메일과 비밀번호를 입력해주세요.';
   }
 
   if(!regex.test(val)) {
-    return '문자, 숫자, 특수문자 포함 6~20자로 입력해주세요.';
+    return '문자, 숫자, 특수문자 6~20자 이내로 입력해주세요.';
   }
 
   return '';

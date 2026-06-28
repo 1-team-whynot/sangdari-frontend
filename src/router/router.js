@@ -2,9 +2,9 @@ import { createRouter, createWebHistory } from 'vue-router';
 import LoginPage from '../domains/auth/pages/LoginPage.vue';
 import { useAuthStore } from '../stores/auth/useAuthStore.js';
 
-const setMeta = (isAuthrenticated, isGuestOnly) => {
+const setMeta = (isAuthenticated, isGuestOnly) => {
   return {
-    isAuthrenticated
+    isAuthenticated
     , isGuestOnly
   }
 }
@@ -42,7 +42,7 @@ router.beforeEach(async (to, from, next) => {
     }
   }
 
-  if(to.meta.isAuthrenticated && !authStore.isLoggedIn) {
+  if(to.meta.isAuthenticated && !authStore.isLoggedIn) {
     return next('/auth/login');
   }
 

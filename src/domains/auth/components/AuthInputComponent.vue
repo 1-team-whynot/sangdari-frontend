@@ -1,10 +1,5 @@
 <script setup>
-// 공통 인풋 컴포넌트
-// v-model로 값을 주고받습니다.
-// error 값이 있으면 빨간 테두리와 에러 메시지가 표시됩니다.
-// isValid가 true이면 초록 테두리로 표시됩니다.
-
-defineProps({
+const props = defineProps({
   label: {
     type: String
     , default: '' 
@@ -26,6 +21,8 @@ defineProps({
     , default: false
   }
 })
+
+const model = defineModel();
 </script>
 
 <template>
@@ -36,6 +33,7 @@ defineProps({
 
     <!-- 인풋 -->
     <input
+      v-model="model"
       class="auth-input"
       :type="type"
       :placeholder="placeholder"
@@ -74,8 +72,12 @@ defineProps({
   color: var(--color-text-placeholder);
 }
 
+.auth-input:focus::placeholder {
+  color: transparent
+}
+
 .auth-input:focus {
   outline: none;
-  border: 1.5px solid var(--color-navy-light);
+  border: 1.5px solid var(--color-accent);
 }
 </style>
