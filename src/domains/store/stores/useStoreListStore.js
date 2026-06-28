@@ -50,6 +50,26 @@ export const useStoreListStore = defineStore("storeListStore", () => {
   // ------------------------------------------------------------------------------
 
   // 3. actions
+
+  // 전체 업체 리스트
+  const getAllStores = async () => {
+    try {
+      const url = '/api/allStores';
+        const params = {
+          page: currentPage.value,
+          limit: limit
+        };
+
+        const res = await axios.get(url, {params});
+        const data = res.data?.data;
+        const stores = data?.stores;
+
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+  }
+
   // "업체 목록"에서 출력할 업체 리스트
   // (체크리스트에서 선택한 조건, 페이지, 리미트 전달)
   const getMatchingStores = async (filterParams) => {

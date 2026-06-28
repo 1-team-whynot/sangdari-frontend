@@ -43,7 +43,7 @@ const isDateTooSoon = computed(() => {
 });
 
 // 4. 음식 종류
-const MENUCATEGORIES = ['분식', '도시락/덮밥', '바비큐/스테이크', '카페/디저트', '타코/멕시칸', '닭강정/꼬치', '기타'];
+const MENUCATEGORIES = ['분식', '한식', '일식', '중식', '양식', '카페/디저트', '패스트푸드', '기타'];
 
 // 4-1. 음식 종류: 버튼 클릭 이벤트
 const toggleCategory = (category) => {
@@ -184,8 +184,6 @@ const submitChecklist = () => {
     </div>
 
     <!-- 제출 버튼 -->
-    <!-- TODO: 버튼 공용 컴포넌트 적용시키기, 색상 효과 확인 -->
-    <!-- :class="['checklist-btn', 'checklist-option-flex1', {'checklist-btn-active': }]" -->
     <button
       :class="'checklist-btn'"
       :disabled="!canSubmit"
