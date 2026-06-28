@@ -46,7 +46,8 @@ router.beforeEach(async (to, from, next) => {
     try {
       await authStore.reissue();
     } catch(error) {
-      
+      alert('로그인 시간이 만료되었습니다.\n다시 로그인 해주십시오.');
+      return next('/auth/login');
     }
   }
 
