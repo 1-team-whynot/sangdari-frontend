@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import LoginPage from '../domains/auth/pages/LoginPage.vue';
 import { useAuthStore } from '../stores/auth/useAuthStore.js';
+import SignupPage from '../domains/auth/pages/SignupPage.vue';
 
 const setMeta = (isAuthrenticated, isGuestOnly) => {
   return {
@@ -21,6 +22,13 @@ const routes = [
   {
     path: '/auth/login'
     , component: LoginPage
+    , meta: setMeta(false, true)
+  },
+
+  // 회원가입 관련
+  {
+    path: '/user/signup'
+    , component: SignupPage
     , meta: setMeta(false, true)
   }
 ];

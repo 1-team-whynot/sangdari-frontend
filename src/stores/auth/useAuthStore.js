@@ -45,11 +45,39 @@ export const useAuthStore = defineStore('authStore', () => {
     }
   }
 
+  const signup = async (signupForm) => {
+    try {
+      const url = '/api/user/signup';
+      
+      const res = await myAxios.post(url, signupForm);
+      const data = res.data;
+      return true;
+      
+    } catch (error) {
+      console.log(error)
+      throw error;
+    }
+  }
+
+  const checkEmail = async (email) => {
+    try {
+      const url = '/api/email-check';
+      
+      const res = await myAxios.get(url, {params:{email}});
+
+      return res.data.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   return {
     userInfo
     , accessToken
     , isLoggedIn
     , login 
     , reissue
+    , signup
+    , checkEmail
   }
-})
+});
