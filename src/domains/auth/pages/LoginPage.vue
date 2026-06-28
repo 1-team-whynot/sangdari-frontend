@@ -189,37 +189,40 @@ const handleSubmit = async () => {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: var(--color-primary);
 }
 
 .login-inner {
   width: var(--w-xs);
   display: flex;
   flex-direction: column;
+  gap: 15px;
 }
 
 .tabs {
+  padding: 5px;
   display: flex;
+  justify-content: center;
+  gap: 5px;
   border-radius: var(--radius-lg);
+  /* background-color: #eee; */
 }
 
 .tab-btn {
-  position: relative;
-  bottom: -1px;
   flex: 1 0 100px;
   padding: 15px 0;
-  color: var(--color-white);
-  border: 1px solid var(--color-white);
-  border-radius: 10px 10px 0 0;
-  background-color: var(--color-primary);
+  color: var(--color-primary);
+  border: none;
+  /* border: 1px solid var(--color-primary); */
+  border-radius: 10px;
+  background-color: var(--color-white);
   cursor: pointer;
 }
 
 .tab-btn-active {
-  color: var(--color-primary);
-  border: 1px solid var(--color-white);
+  color: var(--color-white);
+  /* border: 1px solid var(--color-primary); */
   border-bottom: 0;
-  background-color: var(--color-white);
+  background-color: var(--color-primary);
   transition: all 0.2s ease;
 }
 
@@ -228,9 +231,10 @@ const handleSubmit = async () => {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  border: 1px solid var(--color-white);
-  border-radius: 0 0 10px 10px;
+  /* border: 1px solid var(--color-primary); */
+  border-radius: 15px;
   background-color: var(--color-white);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
 .auth-login-title {
@@ -282,12 +286,12 @@ const handleSubmit = async () => {
 
 .divider {
   margin: 0 15px;
-  color: var(--color-primary-border);
+  color: var(--color-accent);
 }
 
 .owner-theme {
   --color-primary: var(--color-navy);
-  --color-navy-light: var(--color-primary-border);
   --color-primary-hover: var(--color-navy-dark);
+  --color-accent: var(--color-lavender);
 }
 </style>
