@@ -10,6 +10,8 @@ import PaymentCompletePage from '../domains/payment/pages/PaymentCompletePage.vu
 
 import { useAuthStore } from '../stores/auth/useAuthStore.js'
 import HomePage from '../domains/home/HomePage.vue'
+import ChecklistPage from '../domains/checklist/pages/checklistPage.vue'
+import StoreListPage from '../domains/store/pages/StoreListPage.vue'
 
 const setMeta = (isAuthenticated, isGuestOnly) => {
   return {
@@ -23,6 +25,22 @@ const routes = [
     path: '/',
     name: 'Home',
     component: HomePage,
+    meta: setMeta(false, false),
+  },
+
+  // 체크리스트
+  {
+    path: '/checklist',
+    name: 'Checklist',
+    component: ChecklistPage,
+    meta: setMeta(false, false),
+  },
+
+  // 업체 목록
+  {
+    path: '/storelist',
+    name: 'StoreList',
+    component: StoreListPage,
     meta: setMeta(false, false),
   },
 
@@ -77,21 +95,21 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore()
 
-  if (!authStore.isLoggedIn) {
+  if (to.meta.isAuthenticated && !authStore.isLoggedIn) {
     try {
-      await authStore.reissue();
+      await authStore.reissue()
     } catch(error) {
-      alert('로그인 시간이 만료되었습니다.\n다시 로그인 해주십시오.');
-      return next('/auth/login');
+      alert('로그인 시간이 만료되었습니다.\n다시 로그인 해주십시오.')
+      return '/auth/login'
     }
   }
 
   if (to.meta.isAuthenticated && !authStore.isLoggedIn) {
-    return next('/auth/login')
+    return '/auth/login'
   }
 
   if (to.meta.isGuestOnly && authStore.isLoggedIn) {
-    return next('/')
+    return '/'
   }
 
   next()

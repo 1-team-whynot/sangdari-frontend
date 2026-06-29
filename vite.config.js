@@ -10,6 +10,10 @@ export default defineConfig({
       '/api': {
         target: 'http://localhost:8080', // 백엔드 서버 주소
         changeOrigin: true,
+      },
+      '/files': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
       }
     }
   }

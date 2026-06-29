@@ -2,6 +2,7 @@
 import { onMounted, ref } from 'vue'
 
 import myAxios from '../api/myAxios.js'
+import { resolveFileUrl } from '../../utils/resolveFileUrl.js'
 
 const checklistLink = '/checklist'
 const storeListLink = '/storelist'
@@ -28,7 +29,7 @@ const normalizeStore = (store) => {
     region: getTextFromArray(store.regionNames) || '지역 미정',
     description: store.storeDesc,
     status: batterySupported ? '배터리 지원' : '견적 가능',
-    imageUrl: store.imageUrl,
+    imageUrl: resolveFileUrl(store.imageUrl),
     imageText: store.businessName,
     headcountText: `${store.minHeadcount}명 ~ ${store.maxHeadcount}명`,
   }
@@ -39,8 +40,15 @@ const loadFeaturedStores = async () => {
   storeErrorMessage.value = ''
 
   try {
-    const response = await myAxios.get('/api/allStores')
-    const storeList = Array.isArray(response.data?.data) ? response.data.data : []
+    const response = await myAxios.get('/api/allStores', {
+      params: {
+        page: 1,
+        limit: 4,
+      },
+    })
+    const storeList = Array.isArray(response.data?.data?.stores)
+      ? response.data.data.stores
+      : []
 
     featuredStores.value = storeList
       .slice(0, 4)
