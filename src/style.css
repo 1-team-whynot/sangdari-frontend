@@ -6,80 +6,111 @@
    Design Tokens
    ============================ */
 :root {
-  /* Colors */
-  --color-primary: #ff6b00;
-  --color-primary-hover: #ea580c;
+  /* Brand */
+  --color-primary: #FF6B00;
+  --color-primary-hover: #EA580C;
+  --color-primary-light: #FFF7ED;
+  --color-primary-border: #FED7AA;
+  --color-accent: #FFD200;
 
-  --color-bg: #f8fafc;
-  --color-white: #ffffff;
+  /* Neutral */
+  --color-lavender: #af7dff;
+  --color-navy: #1E293B;
+  --color-navy-dark: #0F172A;
+  --color-white: #FFFFFF;
+  --color-bg: #F8FAFC;
+  --color-bg-alt: #F3F4F6;
+  --color-bg-secondary: #F9FAFB;
+  --color-border: #E5E7EB;
+  --color-border-light: #F1F5F9;
 
-  --color-text: #1e293b;
-  --color-text-sub: #475569;
-  --color-text-muted: #64748b;
+  /* Text */
+  --color-text: #111827;
+  --color-text-sub: #374151;
+  --color-text-muted: #6B7280;
+  --color-text-placeholder: #9CA3AF;
+  --color-text-light: #D1D5DB;
 
-  --color-border: #e2e8f0;
+  /* Status */
+  --color-success: #15803D;
+  --color-success-light: #DCFCE7;
+  --color-success-border: #BBF7D0;
+  --color-danger: #B91C1C;
+  --color-danger-dark: #7F1D1D;
+  --color-danger-light: #FEF2F2;
+  --color-danger-border: #FECACA;
+  --color-danger-text: #F87171;
+  --color-warning-text: #92400E;
+  --color-warning-light: #FEF3C7;
+  --color-info: #1D4ED8;
+  --color-info-deep: #1E3A5F;
+  --color-info-mid: #1E40AF;
+  --color-info-light: #EFF6FF;
+  --color-info-border: #BFDBFE;
+  --color-info-sub: #3B82F6;
+  --color-purple: #6D28D9;
+  --color-purple-light: #EDE9FE;
 
-  --color-danger: #dc2626;
-  --color-danger-light: #fee2e2;
-  --color-danger-border: #fecaca;
-
-  --color-success: #16a34a;
-  --color-success-light: #dcfce7;
-  --color-success-border: #bbf7d0;
-
-  --color-info: #2563eb;
-  --color-info-light: #dbeafe;
-  --color-info-border: #bfdbfe;
-
-  --color-warning: #d97706;
-  --color-warning-light: #fef3c7;
-  --color-warning-text: #92400e;
-
-  --color-purple: #7c3aed;
-  --color-purple-light: #ede9fe;
-
-  /* Radius */
-  --radius-sm: 8px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
-  --radius-xl: 22px;
+  /* Border Radius */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
   --radius-full: 999px;
 
   /* Shadow */
-  --shadow-sm: 0 4px 14px rgba(15, 23, 42, 0.06);
-  --shadow-lg: 0 18px 50px rgba(15, 23, 42, 0.12);
-  --shadow-primary: 0 12px 28px rgba(255, 107, 0, 0.25);
-
-  /* Font Size */
-  --text-sm: 13px;
-  --text-base: 14px;
-  --text-md: 16px;
-  --text-lg: 18px;
-  --text-xl: 20px;
-  --text-4xl: 32px;
-  --text-5xl: 40px;
+  --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.1);
+  --shadow-primary: 0 4px 24px rgba(255, 107, 0, 0.4);
 
   /* Spacing */
+  --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
   --space-4: 16px;
   --space-5: 20px;
   --space-6: 24px;
   --space-8: 32px;
-  --space-10: 48px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-18: 72px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-hero: 100px;
 
-  /* Width */
-  --w-xs: 360px;
-  --w-sm: 480px;
-  --w-form: 520px;
-  --w-card: 760px;
-  --w-md: 860px;
-  --w-lg: 1120px;
-  --w-full: 1280px;
+  /* Container widths */
+  --w-full: 1200px;
+  --w-lg: 1100px;
+  --w-md: 800px;
+  --w-sm: 720px;
+  --w-form: 640px;
+  --w-card: 560px;
+  --w-xs: 480px;
+  --w-modal: 420px;
+  --w-modal-sm: 380px;
 
-  /* Transition */
-  --transition-fast: 0.18s ease;
-  --transition-base: 0.25s ease;
+  /* Typography */
+  --text-xs: 11px;
+  --text-sm: 12px;
+  --text-base: 13px;
+  --text-md: 14px;
+  --text-lg: 15px;
+  --text-xl: 16px;
+  --text-2xl: 18px;
+  --text-3xl: 20px;
+  --text-4xl: 22px;
+  --text-5xl: 24px;
+  --text-6xl: 26px;
+  --text-heading: clamp(1.5rem, 3vw, 2.2rem);
+  --text-hero: clamp(2rem, 5vw, 3.2rem);
+
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.2s ease;
+  --transition-slow: 0.3s ease;
 }
 
 /* ============================
