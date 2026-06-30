@@ -5,7 +5,13 @@ import { useRoute, useRouter } from 'vue-router'
 import BaseButton from '../../common/components/BaseButton.vue'
 import { useReservationDraftStore } from '../../reservation/stores/useReservationDraftStore.js'
 import { useAuthStore } from '../../../stores/auth/useAuthStore.js'
-import { resolveFileUrl } from '../../../utils/resolveFileUrl.js'
+import {
+  applyImageFallback,
+  DEFAULT_MENU_IMAGE_URL,
+  DEFAULT_STORE_IMAGE_URL,
+  getMenuImageUrl,
+  getStoreImageUrl,
+} from '../../../utils/imageFallbacks.js'
 import { useStoreDetailStore } from '../stores/useStoreDetailStore.js'
 
 const route = useRoute()
@@ -21,7 +27,7 @@ const store = computed(() => storeDetailStore.store)
 const menus = computed(() => (
   Array.isArray(store.value?.menus) ? store.value.menus : []
 ))
-const storeImageUrl = computed(() => resolveFileUrl(store.value?.imageUrl))
+const storeImageUrl = computed(() => getStoreImageUrl(store.value?.imageUrl))
 const storeDescription = computed(() => (
   store.value?.storeDescription
   || store.value?.description
@@ -109,11 +115,10 @@ watch(
         <section class="store-hero card">
           <div class="store-hero-image">
             <img
-              v-if="storeImageUrl"
               :src="storeImageUrl"
               :alt="`${store.businessName} 대표 이미지`"
+              @error="applyImageFallback($event, DEFAULT_STORE_IMAGE_URL)"
             >
-            <span v-else>{{ store.businessName }}</span>
           </div>
 
           <div class="store-hero-info">
@@ -161,11 +166,10 @@ watch(
             >
               <div class="menu-image">
                 <img
-                  v-if="resolveFileUrl(menu.imageUrl)"
-                  :src="resolveFileUrl(menu.imageUrl)"
+                  :src="getMenuImageUrl(menu.imageUrl)"
                   :alt="`${menu.name} 이미지`"
+                  @error="applyImageFallback($event, DEFAULT_MENU_IMAGE_URL)"
                 >
-                <span v-else>{{ menu.name }}</span>
               </div>
 
               <div class="menu-body">

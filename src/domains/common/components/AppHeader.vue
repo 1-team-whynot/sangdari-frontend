@@ -37,7 +37,7 @@ onUnmounted(() => {
       <!-- 로고 -->
       <RouterLink to="/" class="header-logo">
         <img
-          src="/icons/sangdari-logo.png"
+          src="/src/assets/images/sangdari-logo.png"
           alt="상다리"
           class="header-logo-img"
         />

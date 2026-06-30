@@ -1,13 +1,17 @@
 <script setup>
 import { computed } from 'vue'
 
-import { resolveFileUrl } from '../../../utils/resolveFileUrl.js'
+import {
+  applyImageFallback,
+  DEFAULT_STORE_IMAGE_URL,
+  getStoreImageUrl,
+} from '../../../utils/imageFallbacks.js'
 
 const props = defineProps({
   store: { type: Object, required: true },
 })
 
-const imageUrl = computed(() => resolveFileUrl(props.store.imageUrl))
+const imageUrl = computed(() => getStoreImageUrl(props.store.imageUrl))
 const categories = computed(() => props.store.foodCategoryNames || '카테고리 미정')
 const batteryText = computed(() => (
   props.store.isBatterySupported ? '전기 불필요' : '전기 필요'
@@ -23,11 +27,10 @@ const batteryBadgeClass = computed(() => (
   <article class="store-card card">
     <div class="store-card-image">
       <img
-        v-if="imageUrl"
         :src="imageUrl"
         :alt="`${store.businessName} 대표 이미지`"
+        @error="applyImageFallback($event, DEFAULT_STORE_IMAGE_URL)"
       >
-      <span v-else>{{ store.businessName }}</span>
     </div>
 
     <div class="store-card-body">
