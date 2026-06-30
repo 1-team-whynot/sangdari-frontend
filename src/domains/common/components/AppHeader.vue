@@ -58,10 +58,10 @@ onUnmounted(() => {
           </RouterLink>
 
           <RouterLink
-            to="/mypage"
+            to="/users/info"
             :class="[
               'nav-link',
-              { 'nav-link--active': route.path === '/mypage' }
+              { 'nav-link--active': route.path === '/users/info' }
             ]"
           >
             마이페이지

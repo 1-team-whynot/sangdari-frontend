@@ -10,6 +10,11 @@ import PaymentCompletePage from '../domains/payment/pages/PaymentCompletePage.vu
 
 import { useAuthStore } from '../stores/auth/useAuthStore.js'
 import HomePage from '../domains/home/HomePage.vue'
+import UserInfoPage from '../domains/user/pages/UserInfoPage.vue'
+import UserUpdateInfoPage from '../domains/user/pages/UserUpdateInfoPage.vue'
+import { patchProp } from 'vue'
+import UserChangePasswordPage from '../domains/user/pages/UserChangePasswordPage.vue'
+import UserWithdrawPage from '../domains/user/pages/UserWithdrawPage.vue'
 import ChecklistPage from '../domains/checklist/pages/checklistPage.vue'
 import StoreListPage from '../domains/store/pages/StoreListPage.vue'
 import StoreDetailPage from '../domains/store/pages/StoreDetailPage.vue'
@@ -81,6 +86,38 @@ const routes = [
     meta: setMeta(false, true),
   },
 
+  // 내 정보 조회
+  {
+    path: '/users/info',
+    name: 'Info',
+    component: UserInfoPage,
+    meta: setMeta(true, false)
+  },
+
+  // 내 정보 수정
+  {
+    path: '/users/info-update',
+    name: 'UpdateInfo',
+    component: UserUpdateInfoPage,
+    meta: setMeta(true, false)
+  },
+
+  // 비밀번호 변경
+  {
+    path: '/users/password-change',
+    name: 'ChangePassword',
+    component: UserChangePasswordPage,
+    meta: setMeta(true, false)
+  },
+
+  // 회원 탈퇴
+  {
+    path: '/users/withdraw',
+    name: 'withdraw',
+    component: UserWithdrawPage,
+    meta: setMeta(true, false)
+  },
+
   // 결제
   {
     path: '/payment',
@@ -113,7 +150,7 @@ const router = createRouter({
   routes,
 })
 
-router.beforeEach(async (to) => {
+router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore()
 
   if (to.meta.isAuthenticated && !authStore.isLoggedIn) {
@@ -132,6 +169,8 @@ router.beforeEach(async (to) => {
   if (to.meta.isGuestOnly && authStore.isLoggedIn) {
     return '/'
   }
+
+  next()
 })
 
 export default router
