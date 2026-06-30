@@ -30,7 +30,7 @@ const errors = reactive({
 onMounted(async () => {
   // 스토어에 내 정보가 없으면 새로 불러옵니다.
   if (!userStore.myInfo) {
-    await userStore.selecteInfo()
+    await userStore.selectInfo()
   }
   
   updateForm.name = userStore.myInfo?.name || ''
@@ -40,11 +40,11 @@ onMounted(async () => {
 // 저장 버튼 클릭 시 실행되는 함수
 const handleSubmit = async () => {
   // 1. 유효성 검사 (정규식 체크)
-  const isNameValid = updateInfoValidator.name(updateForm.name);
-  const isPhoneValid = updateInfoValidator.phone(updateForm.phone);
+  errors.name = updateInfoValidator.name(updateForm.name);
+  errors.phone = updateInfoValidator.phone(updateForm.phone);
 
   // 에러가 하나라도 있으면 서버로 보내지 않고 중단
-  if (isNameValid || isPhoneValid) return
+  if (errors.name || errors.phone) return
 
   // 2. DB 서버로 데이터 전송 (Pinia Store 액션 호출)
   try {
