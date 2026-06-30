@@ -599,6 +599,9 @@ const useCases = [
 }
 
 .store-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   overflow: hidden;
   border: 1.5px solid var(--color-border);
   border-radius: var(--radius-xl);
@@ -637,6 +640,9 @@ const useCases = [
 }
 
 .store-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
   padding: var(--space-5);
 }
 
@@ -652,6 +658,9 @@ const useCases = [
   font-size: var(--text-lg);
   font-weight: 900;
   line-height: 1.35;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .store-badge {
@@ -677,6 +686,10 @@ const useCases = [
   color: var(--color-text-sub);
   font-size: var(--text-sm);
   font-weight: 700;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
 
 .store-headcount {
@@ -684,19 +697,27 @@ const useCases = [
   color: var(--color-text-muted);
   font-size: var(--text-sm);
   font-weight: 700;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
 
 .store-desc {
-  min-height: 72px;
   margin-top: var(--space-3);
+  margin-bottom: var(--space-4);
   color: var(--color-text-muted);
   font-size: var(--text-base);
   line-height: 1.6;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 
 .store-link {
   width: 100%;
-  margin-top: var(--space-4);
+  margin-top: auto;
   padding: 12px 16px;
   background: var(--color-primary);
   color: var(--color-white);
