@@ -15,10 +15,15 @@ const createMinEventDate = () => {
 export const useChecklistStore = defineStore('checklist', () => {
   const REGIONS = [
     { value: 1, label: '서울' },
-    { value: 2, label: '경기' },
-    { value: 3, label: '인천' },
-    { value: 4, label: '강원' },
-    { value: 5, label: '대전' },
+    { value: 2, label: '부산' },
+    { value: 3, label: '대구' },
+    { value: 4, label: '인천' },
+    { value: 5, label: '광주' },
+    { value: 6, label: '대전' },
+    { value: 7, label: '울산' },
+    { value: 8, label: '세종' },
+    { value: 9, label: '경기' },
+    { value: 10, label: '제주' },
   ]
 
   const HEADCOUNT_OPTIONS = [
@@ -35,8 +40,7 @@ export const useChecklistStore = defineStore('checklist', () => {
     '일식',
     '중식',
     '양식',
-    '카페/음료',
-    '디저트',
+    '카페/디저트',
     '패스트푸드',
     '기타',
   ]
