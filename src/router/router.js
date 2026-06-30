@@ -72,6 +72,11 @@ const routes = [
 
   // 로그인
   {
+    path: '/auth/find-password',
+    redirect: '/auth/login',
+    meta: setMeta(false, true),
+  },
+  {
     path: '/auth/login',
     name: 'Login',
     component: LoginPage,
@@ -150,7 +155,20 @@ const router = createRouter({
   routes,
 })
 
-router.beforeEach(async (to, from, next) => {
+const getSafeRedirectPath = (redirect) => {
+  if (typeof redirect !== 'string') return ''
+  if (!redirect.startsWith('/') || redirect.startsWith('//')) return ''
+  return redirect
+}
+
+const createLoginRedirect = (to) => ({
+  path: '/auth/login',
+  query: {
+    redirect: to.fullPath,
+  },
+})
+
+router.beforeEach(async (to) => {
   const authStore = useAuthStore()
 
   if (to.meta.isAuthenticated && !authStore.isLoggedIn) {
@@ -158,19 +176,17 @@ router.beforeEach(async (to, from, next) => {
       await authStore.reissue()
     } catch(error) {
       alert('로그인 시간이 만료되었습니다.\n다시 로그인 해주십시오.')
-      return '/auth/login'
+      return createLoginRedirect(to)
     }
   }
 
   if (to.meta.isAuthenticated && !authStore.isLoggedIn) {
-    return '/auth/login'
+    return createLoginRedirect(to)
   }
 
   if (to.meta.isGuestOnly && authStore.isLoggedIn) {
-    return '/'
+    return getSafeRedirectPath(to.query.redirect) || '/'
   }
-
-  next()
 })
 
 export default router

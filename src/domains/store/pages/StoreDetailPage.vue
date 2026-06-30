@@ -4,11 +4,13 @@ import { useRoute, useRouter } from 'vue-router'
 
 import BaseButton from '../../common/components/BaseButton.vue'
 import { useReservationDraftStore } from '../../reservation/stores/useReservationDraftStore.js'
+import { useAuthStore } from '../../../stores/auth/useAuthStore.js'
 import { resolveFileUrl } from '../../../utils/resolveFileUrl.js'
 import { useStoreDetailStore } from '../stores/useStoreDetailStore.js'
 
 const route = useRoute()
 const router = useRouter()
+const authStore = useAuthStore()
 const storeDetailStore = useStoreDetailStore()
 const reservationDraftStore = useReservationDraftStore()
 
@@ -53,6 +55,16 @@ const goReservationCreate = () => {
     },
     selectedMenus: selectedMenus.value,
   })
+
+  if (!authStore.isLoggedIn) {
+    router.push({
+      path: '/auth/login',
+      query: {
+        redirect: '/reservation/create',
+      },
+    })
+    return
+  }
 
   router.push('/reservation/create')
 }

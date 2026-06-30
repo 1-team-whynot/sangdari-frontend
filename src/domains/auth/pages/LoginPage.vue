@@ -1,6 +1,6 @@
 <script setup>
 import { ref, reactive } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '../../../stores/auth/useAuthStore.js'
 import { useErrorStore } from '../../../stores/error/useErrorStore.js'
 import loginValidator from '../utils/loginValidator.js'
@@ -8,8 +8,15 @@ import AuthInputComponent from '../components/AuthInputComponent.vue'
 import BaseButton from '../../common/components/BaseButton.vue'
 
 const router    = useRouter()
+const route     = useRoute()
 const authStore = useAuthStore()
 const errorStore = useErrorStore()
+
+const getSafeRedirectPath = (redirect) => {
+  if (typeof redirect !== 'string') return ''
+  if (!redirect.startsWith('/') || redirect.startsWith('//')) return ''
+  return redirect
+}
 
 // 현재 화면 ('user' | 'owner')
 const screen = ref('user')
@@ -57,7 +64,7 @@ const handleSubmit = async () => {
   isLoading.value = true;
   try {
     await authStore.login(userLogin);
-    router.replace('/');
+    router.replace(getSafeRedirectPath(route.query.redirect) || '/');
   } catch (error) {
     if(error.response) {
       if(error.response?.data?.code === 'E21') {
