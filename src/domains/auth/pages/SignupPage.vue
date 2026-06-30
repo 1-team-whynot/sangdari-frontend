@@ -6,7 +6,7 @@ import { email, name, password, passwordChk, phone } from '../../user/rule/userR
 import signupValidator from '../utils/signupValidator';
 import AuthInputComponent from '../components/AuthInputComponent.vue';
 import BaseButton from '../../common/components/BaseButton.vue';
-import { reactive, ref } from 'vue';
+import { computed, reactive, ref, watch } from 'vue';
 
 const router = useRouter();
 const authStore = useAuthStore();
@@ -23,9 +23,25 @@ const signupForm = reactive({
   , phone: ''
 });
 
+// 모든 필수 입력창에 내용이 들어왔는지 확인하는 computed 변수
+const isFormComplete = computed(() => {
+  return (
+    signupForm.email.trim() !== '' &&
+    signupForm.password.trim() !== '' &&
+    signupForm.passwordChk.trim() !== '' &&
+    signupForm.name.trim() !== '' &&
+    signupForm.phone.trim() !== ''
+  )
+});
+
 const emailError = ref('');
 const isEmailChecked = ref(false);
 const isCheckingEmail = ref(false);
+
+// 이메일 입력값이 변경되면 중복확인 상태를 false로 초기화
+watch(() => signupForm.email, () => {
+  isEmailChecked.value = false
+});
 
 const handleCheckDuplicateEmail = async () => {
   emailError.value = ''
@@ -44,7 +60,7 @@ const handleCheckDuplicateEmail = async () => {
     if (!isDuplicated) {
       emailError.value = '이미 사용 중인 이메일입니다.'
     } else {
-      alert('사용 가능한 이메일입니다!')
+      alert('사용 가능한 이메일입니다! ✨')
       isEmailChecked.value = true
     }
   } catch (error) {
@@ -115,16 +131,16 @@ const handleSubmit = async () => {
             type="email"
             placeholder="example@email.com"
             style="width: 100%;"
-            :readonly="isEmailChecked"
+            require
           />
 
           <BaseButton
-            class="check-btn"
-            @click="handleCheckDuplicateEmail"
-            :disabled="isCheckingEmail || isEmailChecked"
-          >
-            {{ isCheckingEmail ? '확인 중...' : '중복확인' }}
-          </BaseButton>
+                class="check-btn"
+                @click="handleCheckDuplicateEmail"
+                :disabled="isCheckingEmail || isEmailChecked"
+              >
+                {{ isCheckingEmail ? '확인 중...' : '중복확인' }}
+              </BaseButton>
         </div>
         <p v-if="emailError" class="error-msg">{{ emailError }}</p>
 
@@ -134,6 +150,7 @@ const handleSubmit = async () => {
             label="비밀번호"
             type="password"
             placeholder="대/소문자, 숫자, 특수문자 6 ~ 20자 이내"
+            require
           />
         </div>
 
@@ -143,6 +160,7 @@ const handleSubmit = async () => {
             label="비밀번호 확인"
             type="password"
             placeholder="비밀번호 재입력"
+            require
           />
         </div>
         
@@ -151,6 +169,7 @@ const handleSubmit = async () => {
             v-model="signupForm.name"
             label="이름"
             placeholder="이름을 입력해주세요. (2 ~ 40자 이내)"
+            require
           />
         </div>
 
@@ -160,6 +179,7 @@ const handleSubmit = async () => {
             label="연락처"
             type="tel"
             placeholder="하이픈(-) 없이 숫자만 입력해주세요. (11자리)"
+            require
           />
         </div>
 
@@ -168,6 +188,7 @@ const handleSubmit = async () => {
           variant="primary"
           full-width
           style="margin-top: 25px;"
+          :disabled="!isFormComplete || isLoading"
         >
           가입하기
         </BaseButton>

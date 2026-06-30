@@ -20,6 +20,7 @@ import StoreListPage from '../domains/store/pages/StoreListPage.vue'
 import StoreDetailPage from '../domains/store/pages/StoreDetailPage.vue'
 import ReservationCreatePage from '../domains/reservation/pages/ReservationCreatePage.vue'
 import MyRequestsPage from '../domains/myRequest/pages/MyRequestsPage.vue'
+import FindPasswordPage from '../domains/auth/pages/FindPasswordPage.vue'
 
 const setMeta = (isAuthenticated, isGuestOnly) => {
   return {
@@ -70,12 +71,15 @@ const routes = [
     meta: setMeta(true, false),
   },
 
-  // 로그인
+  // 비밀번호 찾기
   {
     path: '/auth/find-password',
-    redirect: '/auth/login',
-    meta: setMeta(false, true),
+    name: 'FindPassword',
+    component: FindPasswordPage,
+    meta: setMeta(false, true), // 비로그인 전용 페이지
   },
+  
+  // 로그인
   {
     path: '/auth/login',
     name: 'Login',

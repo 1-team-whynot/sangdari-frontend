@@ -12,7 +12,7 @@ const isLoading = ref(true)
 
 onMounted(async () => {
   try {
-    await userStore.selecteInfo()
+    await userStore.selectInfo()
   } catch (error) {
     console.error('사용자 정보를 불러오지 못했습니다.', error)
   } finally {

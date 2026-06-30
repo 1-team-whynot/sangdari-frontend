@@ -89,6 +89,28 @@ export const useAuthStore = defineStore('authStore', () => {
     }
   }
 
+  const resetPassword = async (resetForm) => {
+    try {
+      const url = '/api/find-password';
+      
+      const res = await myAxios.put(url, resetForm);
+      return res.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  const verifyUser = async (verifyForm) => {
+    try {
+      const url = '/api/auth/verify-user';
+      
+      const res = await myAxios.post(url, verifyForm);
+      return res.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   return {
     userInfo
     , accessToken
@@ -98,5 +120,7 @@ export const useAuthStore = defineStore('authStore', () => {
     , logout
     , signup
     , checkEmail
+    , resetPassword
+    , verifyUser
   }
 });

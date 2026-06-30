@@ -1,5 +1,5 @@
 <script setup>
-import { computed, reactive } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 import BaseButton from '../../common/components/BaseButton.vue'
@@ -98,6 +98,49 @@ const submitReservation = async () => {
     // Store state already contains the user-facing error message.
   }
 }
+
+// 상세주소 포커싱용 ref
+    const addrDetailInput = ref(null)
+    
+    // 다음 우편번호 스크립트 동적 로드 함수
+    const loadDaumPostcodeScript = () => {
+      return new Promise((resolve, reject) => {
+        if (window.daum && window.daum.Postcode) {
+          resolve()
+          return
+        }
+        const script = document.createElement('script')
+        script.src = '//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js'
+        script.onload = () => resolve()
+        script.onerror = () => reject(new Error('Daum Postcode script load failed'))
+        document.head.appendChild(script)
+      })
+    }
+    
+    // 주소 검색 팝업 열기
+    const openPostcode = async () => {
+      try {
+        await loadDaumPostcodeScript()
+        new window.daum.Postcode({
+          oncomplete: (data) => {
+            // 도로명 주소(R)와 지번 주소 중 선택한 주소 유형에 따라 대입
+            form.addrBase = data.userSelectedType === 'R' ? data.roadAddress : data.jibunAddress
+            
+            // 상세 주소 입력 필드로 포커스 이동
+            if (addrDetailInput.value) {
+              const inputEl = addrDetailInput.value.$el.querySelector('input')
+              if (inputEl) {
+                inputEl.focus()
+              }
+            }
+          },
+        }).open()
+      } catch (error) {
+        console.error('주소 API 로드 실패:', error)
+        alert('주소 검색 서비스를 불러오는 중 오류가 발생했습니다. 다시 시도해주세요.')
+      }
+    }
+
 </script>
 
 <template>
@@ -146,14 +189,27 @@ const submitReservation = async () => {
         </aside>
 
         <form class="card request-form" @submit.prevent="submitReservation">
-          <BaseInput
-            v-model="form.addrBase"
-            label="행사 장소 기본 주소"
-            placeholder="예: 서울 송파구 올림픽로 300"
-            maxlength="100"
-          />
+          <div class="address-input-group">
+            <BaseInput
+              v-model="form.addrBase"
+              label="행사 장소 기본 주소"
+              placeholder="주소 검색 버튼을 클릭하여 입력해주세요."
+              readonly
+              class="address-base-input"
+              @click="openPostcode"
+            />
+            <BaseButton
+              type="button"
+              variant="outline"
+              class="address-search-btn"
+              @click="openPostcode"
+            >
+              주소 검색
+            </BaseButton>
+          </div>
 
           <BaseInput
+            ref="addrDetailInput"
             v-model="form.addrDetail"
             label="행사 장소 상세 주소"
             placeholder="예: 행사장 A동 앞"
@@ -330,6 +386,29 @@ const submitReservation = async () => {
   display: flex;
   justify-content: flex-end;
   gap: var(--space-3);
+}
+
+.address-input-group {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-2);
+}
+
+.address-base-input {
+  flex: 1;
+}
+
+/* readonly 인풋 위에 마우스 올렸을 때 포인터 표시 */
+.address-base-input :deep(.field-input) {
+  cursor: pointer;
+}
+
+/* 인풋 높이에 맞춰 버튼 높이 및 글자 크기 지정 */
+.address-search-btn {
+  height: 42px;
+  padding: 0 var(--space-4);
+  font-size: var(--text-base);
+  flex-shrink: 0;
 }
 
 @media (max-width: 900px) {

@@ -12,7 +12,7 @@ export const useUserStore = defineStore('userStore', () => {
   // 3. Actions
   
   // 내 정보 조회
-  const selecteInfo = async () => {
+  const selectInfo = async () => {
     try {
       const url = '/api/users/info';
 
@@ -50,6 +50,18 @@ export const useUserStore = defineStore('userStore', () => {
       throw error;
     }
   }
+  
+  // 마이페이지 비밀번호 검증
+  const verifyPassword = async (verifyForm) => {
+    try {
+      const url = '/api/users/password-verify';
+
+      const res = await myAxios.post(url, verifyForm);
+      return res.data;
+    } catch (error) {
+      throw error;
+    }
+  }
 
   // 회원 탈퇴
   const withdraw = async (withdrawForm) => {
@@ -73,9 +85,10 @@ export const useUserStore = defineStore('userStore', () => {
 
   return {
     myInfo
-    , selecteInfo
+    , selectInfo
     , updateInfo
     , changePassword
+    , verifyPassword
     , withdraw
   }
 });
