@@ -67,8 +67,11 @@ const handleSubmit = async () => {
     router.replace(getSafeRedirectPath(route.query.redirect) || '/');
   } catch (error) {
     if(error.response) {
-      if(error.response?.data?.code === 'E21') {
-        userLogin.error = error.response.data.data;
+      const code = error.response?.data?.code;
+      const message = error.response?.data?.message;
+
+      if(code === 'E21' || code === 'E32' || message === 'USER_INVALID_PASSWORD' || message === 'AUTH_LOGIN_FAILED') {
+        userLogin.error = '가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.';
       } else {
         userLogin.error = error.response.data.message || '로그인 정보가 올바르지 않습니다.';
       }
